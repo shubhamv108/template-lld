@@ -1,0 +1,98 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'org.sonarqube' version '4.0.0.2929'
+    id 'com.diffplug.spotless' version '5.0.0'
+}
+
+group = 'code.shubham'
+version = '1.0.0'
+
+//java {
+//    sourceCompatibility = '21'
+//}
+
+jar {
+    archiveBaseName = 'fiq'
+    archiveVersion =  '1.0.0'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF"
+        exclude "META-INF/*.DSA"
+        exclude "META-INF/*.RSA"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation (
+            platform('org.junit:junit-bom:5.10.0'),
+            'org.junit.jupiter:junit-jupiter'
+    )
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    finalizedBy(jacocoTestReport)
+    afterSuite { desc, result ->
+        if (!desc.parent)
+            println("${result.resultType} " +
+                    "(${result.testCount} tests, " +
+                    "${result.successfulTestCount} successes, " +
+                    "${result.failedTestCount} failures, " +
+                    "${result.skippedTestCount} skipped)")
+    }
+}
+
+jacocoTestReport {
+    dependsOn(test)
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: [
+                            '**/entities',
+                            '**/*models',
+                            'code/shubham/*/*/*/entities/**',
+                            'code/shubham/*/*/*/*/entities/**',
+                            'code/shubham/*/*/entities/**',
+                            'code/shubham/*/*models/**',
+                            'code/shubham/*/*/*models',
+                            'code/shubham/*/exceptions',
+                            'code/shubham/*/filters'
+                    ]
+            )
+        })
+    }
+}
+
+jacocoTestCoverageVerification {
+    dependsOn(jacocoTestReport)
+    violationRules {
+        rule {
+            enabled = true
+            limit {
+                minimum = 0.0
+            }
+        }
+    }
+}
+
+sonar {
+    properties {
+        property('sonar.host.url', 'http://localhost:9017')
+        property('sonar.java.coveragePlugin', 'jacoco')
+        property('sonar.jacoco.reportPath', 'build/jacoco/test.exec')
+        property('sonar.binaries', 'build/classes')
+        property('sonar.language', 'java')
+    }
+}
+
+tasks['sonar'].dependsOn jacocoTestReport
