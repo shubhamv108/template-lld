@@ -7,15 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandFactory {
-    private final Map<String, Command> commands;
-
-    public CommandFactory() {
-        this.commands = new HashMap<>();
-    }
-
-    public void addCommand(final String name, final Command command) {
-        this.commands.put(name, command);
-    }
+    private final Map<String, Command> commands = new HashMap<>();
 
     public void executeCommand(
             final String name,
@@ -26,6 +18,10 @@ public class CommandFactory {
         } else {
             throw new CommandNotFoundException(name);
         }
+    }
+
+    public void addCommand(final String name, final Command command) {
+        this.commands.put(name, command);
     }
 
     public void listCommandHelp() {

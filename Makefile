@@ -32,8 +32,5 @@ format:
 setup: clean format
 	./gradlew build
 
-run-producer: setup
-	java -cp build/libs/fiq-1.0.0.jar code.shubham.fiq.producer.ProducerMain
-
-run-consumer: setup
-	java -cp build/libs/fiq-1.0.0.jar code.shubham.fiq.consumer.ConsumerMain $(queue) $(concurrencyFactor)
+run: setup
+	java -cp build/libs/template-lld-1.0.0.jar code.shubham.app.AppMain
