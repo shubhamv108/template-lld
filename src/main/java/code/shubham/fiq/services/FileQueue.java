@@ -43,8 +43,11 @@ public class FileQueue implements Queue {
     public Message poll() {
         String line;
         try {
-            while ((line = reader.readLine()) != null) {
-                return Message.of(line);
+            while (true) {
+                line = reader.readLine();
+                if (line != null) {
+                    return Message.of(line);
+                }
             }
         } catch (final IOException exception) {
             exception.printStackTrace();

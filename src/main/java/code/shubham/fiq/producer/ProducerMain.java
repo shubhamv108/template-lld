@@ -49,8 +49,16 @@ public class ProducerMain {
 
     private static String[] getStaticInput() {
         final List<String> inputs = new ArrayList<>();
-        inputs.add("key1:message1:1000");
-        inputs.add("key2:message2:1000");
+        inputs.add("key1:message1:10");
+        inputs.add("key2:message2:10");
+        inputs.add("key3:message2:10");
+        inputs.add("key4:message2:10");
+        inputs.add("key5:message2:10");
+        inputs.add("key6:message2:10");
+        inputs.add("key7:message2:10");
+        inputs.add("key8:message2:10");
+        inputs.add("key9:message2:10");
+        inputs.add("key0:message2:10");
         return inputs.toArray(String[]::new);
     }
 

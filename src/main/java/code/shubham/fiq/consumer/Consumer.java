@@ -28,11 +28,7 @@ public class Consumer {
             executor.submit(() -> {
                 while (true) {
                     final Message message = queue.poll();
-                    if (message != null) {
-                        this.processMessage(message);
-                    } else {
-                        break;
-                    }
+                    this.processMessage(message);
                 }
             });
         }
