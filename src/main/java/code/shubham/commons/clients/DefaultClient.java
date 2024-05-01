@@ -3,11 +3,10 @@ package code.shubham.commons.clients;
 import code.shubham.commons.interations.commands.CommandFactory;
 
 import javax.naming.OperationNotSupportedException;
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class DefaultClient extends Client {
-    public DefaultClient(CommandFactory commandFactory) {
+    public DefaultClient(final CommandFactory commandFactory) {
         super(null, commandFactory);
     }
 

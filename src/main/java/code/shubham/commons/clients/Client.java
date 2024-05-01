@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.Arrays;
 
-public class Client {
+public class Client implements AutoCloseable {
     private final BufferedReader inputReader;
     private final CommandFactory commandFactory;
 
@@ -60,4 +60,8 @@ public class Client {
 
     protected void instruction() {}
 
+    @Override
+    public void close() throws Exception {
+        this.inputReader.close();
+    }
 }

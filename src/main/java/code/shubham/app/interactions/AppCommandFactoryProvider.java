@@ -5,6 +5,8 @@ import code.shubham.commons.interations.commands.CommandFactory;
 
 public class AppCommandFactoryProvider {
 
+    private AppCommandFactoryProvider() {}
+
     public CommandFactory getCommandFactory(final AppCommandHandler commandHandler) {
         final CommandFactory commandFactory = new CommandFactory();
         return commandFactory;

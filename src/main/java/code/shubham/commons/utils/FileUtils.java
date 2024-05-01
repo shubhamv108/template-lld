@@ -1,6 +1,5 @@
 package code.shubham.commons.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -30,21 +29,4 @@ public class FileUtils {
         }
         return path;
     }
-
-    public static File lockFile(final String lockFileName) {
-        final File lockFile = new File(lockFileName);
-        try {
-            while (!lockFile.createNewFile()) {
-                Thread.sleep(1000); // Wait and retry
-            }
-        } catch (final IOException | InterruptedException exception) {
-            exception.printStackTrace();
-        }
-        return lockFile;
-    }
-
-    public static void delete(final File file) {
-        file.delete();
-    }
-
 }
